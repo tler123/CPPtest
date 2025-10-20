@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOI 2025 - 澳門奧林匹克資訊競賽</title>
     <style>
