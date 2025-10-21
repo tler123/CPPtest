@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOI 2025 - 比賽分榜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .back-button:hover {
+            background: white;
+            color: #1a3a8f;
+            border-color: white;
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eaeaea;
+            transition: all 0.3s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9ff;
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        td {
+            padding: 16px 15px;
+        }
+        
+        .rank {
+            font-weight: bold;
+            text-align: center;
+            width: 80px;
+            font-size: 1.1rem;
+        }
+        
+        .score {
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .total-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .gold {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+            font-weight: bold;
+        }
+        
+        .silver {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .perfect {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        
+        .good {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .medal-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .gold-badge {
+            background: #d4af37;
+            color: white;
+        }
+        
+        .silver-badge {
+            background: #c0c0c0;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 800px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>MOI 2025 比賽分榜</h1>
+            <p class="subtitle">詳細成績統計與排名</p>
+            <a href="index.html" class="back-button">← 返回主目錄</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>用戶名</th>
+                        <th>Multiples</th>
+                        <th>Rock</th>
+                        <th>Simclock</th>
+                        <th>Algorithm</th>
+                        <th>總分</th>
+                        <th>獎項</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="gold">
+                        <td class="rank">1</td>
+                        <td>吳卓恆</td>
+                        <td>wuzhuoheng</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">400</td>
+                        <td><span class="medal-badge gold-badge">金獎</span></td>
+                    </tr>
+                    <tr class="gold">
+                        <td class="rank">1</td>
+                        <td>曾子睿</td>
+                        <td>zengzirui</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">400</td>
+                        <td><span class="medal-badge gold-badge">金獎</span></td>
+                    </tr>
+                    <tr class="gold">
+                        <td class="rank">1</td>
+                        <td>溫庭昊</td>
+                        <td>wentinghao</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">400</td>
+                        <td><span class="medal-badge gold-badge">金獎</span></td>
+                    </tr>
+                    <tr class="gold">
+                        <td class="rank">1</td>
+                        <td>曾繁宇</td>
+                        <td>zengfanyu</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">400</td>
+                        <td><span class="medal-badge gold-badge">金獎</span></td>
+                    </tr>
+                    <tr class="gold">
+                        <td class="rank">1</td>
+                        <td>沈以恆</td>
+                        <td>shenyiheng</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">400</td>
+                        <td><span class="medal-badge gold-badge">金獎</span></td>
+                    </tr>
+                    <tr class="silver">
+                        <td class="rank">6</td>
+                        <td>謝皓匡</td>
+                        <td>xiehaokuang</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score good">90</td>
+                        <td class="score perfect">100</td>
+                        <td class="total-score">390</td>
+                        <td><span class="medal-badge silver-badge">銀獎</span></td>
+                    </tr>
+                    <tr class="silver">
+                        <td class="rank">6</td>
+                        <td>李沛穎</td>
+                        <td>lipeiying</td>
+                        <td class="score perfect">100</td>
+                        <td class="score perfect">100</td>
+                        <td class="score good">90</td>
+                        <td class="score good">90</td>
+                        <td class="total-score">380</td>
+                        <td><span class="medal-badge silver-badge">銀獎</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="stats-summary">
+            <h3>統計摘要</h3>
+            <p>• 參賽選手: 7人</p>
+            <p>• 金獎獲得者: 5人</p>
+            <p>• 銀獎獲得者: 2人</p>
+            <p>• 滿分選手: 5人</p>
+            <p>• 平均總分: 392.9分</p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>MOI 2025 - 澳門奧林匹克資訊競賽 &copy; 2025 版權所有</p>
+        </div>
+    </footer>
+</body>
+</html>
