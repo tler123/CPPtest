@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOI 2025 - 四題分榜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .problem-tabs {
+            display: flex;
+            background: #f0f4f8;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .problem-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .problem-tab:hover {
+            background: #e1e8f0;
+        }
+        
+        .problem-tab.active {
+            background: white;
+            border-bottom: 3px solid #1a3a8f;
+            color: #1a3a8f;
+        }
+        
+        .problem-content {
+            padding: 0;
+            display: none;
+        }
+        
+        .problem-content.active {
+            display: block;
+        }
+        
+        .problem-info {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .problem-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: #f0f7ff;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a3a8f;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .ranking-table th {
+            background: #1a3a8f;
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .ranking-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .ranking-table tr:hover {
+            background-color: #f8f9ff;
+        }
+        
+        .rank {
+            font-weight: bold;
+            text-align: center;
+            width: 60px;
+        }
+        
+        .score {
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .perfect {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .good {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .average {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .low {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MOI 2025 - 四題分榜</h1>
+            <p class="subtitle">各題目詳細成績分析</p>
+        </header>
+        
+        <div class="problem-tabs">
+            <div class="problem-tab active" data-tab="problem1">題目一: Multiples</div>
+            <div class="problem-tab" data-tab="problem2">題目二: Rock</div>
+            <div class="problem-tab" data-tab="problem3">題目三: Simclock</div>
+            <div class="problem-tab" data-tab="problem4">題目四: Algorithm</div>
+        </div>
+        
+        <!-- 題目一: Multiples -->
+        <div class="problem-content active" id="problem1">
+            <div class="problem-info">
+                <h3>題目一: Multiples</h3>
+                <p>計算數字倍數的進階問題，考察選手的數學思維和程式設計能力。</p>
+            </div>
+            
+            <div class="problem-stats">
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">滿分率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100</div>
+                    <div class="stat-label">平均分數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">滿分人數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">未滿分</div>
+                </div>
+            </div>
+            
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>學校</th>
+                        <th>分數</th>
+                        <th>用時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>吳卓恆</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>45:12</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾子睿</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>47:30</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>溫庭昊</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>50:15</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾繁宇</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>52:08</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>沈以恆</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>55:20</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>謝皓匡</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>58:45</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>李沛穎</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>59:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 題目二: Rock -->
+        <div class="problem-content" id="problem2">
+            <div class="problem-info">
+                <h3>題目二: Rock</h3>
+                <p>岩石分類與特性分析問題，結合地質學知識與數據處理能力。</p>
+            </div>
+            
+            <div class="problem-stats">
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">滿分率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100</div>
+                    <div class="stat-label">平均分數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">滿分人數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">未滿分</div>
+                </div>
+            </div>
+            
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>學校</th>
+                        <th>分數</th>
+                        <th>用時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>吳卓恆</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>35:20</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾子睿</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>38:45</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>溫庭昊</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>40:10</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾繁宇</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>42:30</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>沈以恆</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>45:15</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>謝皓匡</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>48:20</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>李沛穎</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>50:05</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 題目三: Simclock -->
+        <div class="problem-content" id="problem3">
+            <div class="problem-info">
+                <h3>題目三: Simclock</h3>
+                <p>模擬時鐘問題，測試選手的邏輯思維和時間管理算法。</p>
+            </div>
+            
+            <div class="problem-stats">
+                <div class="stat-item">
+                    <div class="stat-value">71.4%</div>
+                    <div class="stat-label">滿分率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">95.7</div>
+                    <div class="stat-label">平均分數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">滿分人數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">未滿分</div>
+                </div>
+            </div>
+            
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>學校</th>
+                        <th>分數</th>
+                        <th>用時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>吳卓恆</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>55:10</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾子睿</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>56:25</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>溫庭昊</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>57:40</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾繁宇</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>58:15</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>沈以恆</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>59:30</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>謝皓匡</td>
+                        <td>培正中學</td>
+                        <td class="score good">90</td>
+                        <td>59:45</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>李沛穎</td>
+                        <td>培正中學</td>
+                        <td class="score good">90</td>
+                        <td>59:50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 題目四: Algorithm -->
+        <div class="problem-content" id="problem4">
+            <div class="problem-info">
+                <h3>題目四: Algorithm</h3>
+                <p>進階算法設計問題，考察選手的創新思維和問題解決能力。</p>
+            </div>
+            
+            <div class="problem-stats">
+                <div class="stat-item">
+                    <div class="stat-value">85.7%</div>
+                    <div class="stat-label">滿分率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">97.1</div>
+                    <div class="stat-label">平均分數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">滿分人數</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">未滿分</div>
+                </div>
+            </div>
+            
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>學校</th>
+                        <th>分數</th>
+                        <th>用時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>吳卓恆</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>48:20</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾子睿</td>
+                        <td>勞校中學附屬小學</td>
+                        <td class="score perfect">100</td>
+                        <td>50:15</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>溫庭昊</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>52:30</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>曾繁宇</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>54:10</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>沈以恆</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>55:45</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">6</td>
+                        <td>謝皓匡</td>
+                        <td>培正中學</td>
+                        <td class="score perfect">100</td>
+                        <td>57:20</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">7</td>
+                        <td>李沛穎</td>
+                        <td>培正中學</td>
+                        <td class="score good">90</td>
+                        <td>58:40</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>MOI 2025 - 澳門奧林匹克資訊競賽 &copy; 2025 版權所有</p>
+        </footer>
+    </div>
+
+    <script>
+        // 切換題目標籤
+        document.querySelectorAll('.problem-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active類
+                document.querySelectorAll('.problem-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.problem-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active類到當前選項
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 添加表格行懸停效果
+        document.querySelectorAll('.ranking-table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f0f7ff';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>
