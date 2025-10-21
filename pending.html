@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一次測驗排行榜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .back-button:hover {
+            background: white;
+            color: #1a3a8f;
+            border-color: white;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .info-section h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .announcement-box {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4edda 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+        }
+        
+        .announcement-box p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #155724;
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eaeaea;
+            transition: all 0.3s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+        
+        td {
+            padding: 16px 15px;
+        }
+        
+        .rank {
+            font-weight: bold;
+            text-align: center;
+            width: 80px;
+            font-size: 1.1rem;
+        }
+        
+        .score {
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .total-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        /* 金銀銅獎項顏色 */
+        .gold-row {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+        }
+        
+        .silver-row {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            border-left: 4px solid #c0c0c0;
+        }
+        
+        .bronze-row {
+            background: linear-gradient(135deg, #fef7e6 0%, #fdebd0 100%);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 800px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .stats-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .stats-summary h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .stats-summary p {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>排行榜</h1>
+            <a href="index.html" class="back-button">← 返回主目錄</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="info-section">
+            <h3>成績公佈時間</h3>
+            <div class="announcement-box">
+                <p>📅 成績將於 <strong>2024年12月25日 18:00</strong> 正式公佈</p>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>用戶名</th>
+                        <th>problem1</th>
+                        <th>problem2</th>
+                        <th>problem3</th>
+                        <th>problem4</th>
+                        <th>總分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="gold-row">
+                        <td class="rank">1</td>
+                        <td>A君</td>
+                        <td>studentA</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="total-score">400</td>
+                    </tr>
+                    <tr class="silver-row">
+                        <td class="rank">2</td>
+                        <td>B君</td>
+                        <td>studentB</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">80</td>
+                        <td class="total-score">380</td>
+                    </tr>
+                    <tr class="bronze-row">
+                        <td class="rank">3</td>
+                        <td>C君</td>
+                        <td>studentC</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">60</td>
+                        <td class="total-score">360</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="stats-summary">
+            <h3>統計</h3>
+            <p>測驗人數: 3 人</p>
+            <p>平均分: 380 分</p>
+            <p>出題人: tler</p>
+        </div>
+    </div>
+</body>
+</html>
