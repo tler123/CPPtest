@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking</title>
+    <title>排行榜</title>
     <style>
         * {
             margin: 0;
@@ -95,8 +95,6 @@
         
         tbody tr:hover {
             background-color: #f8f9ff;
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         td {
@@ -121,45 +119,6 @@
             text-align: center;
         }
         
-        .gold {
-            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
-            font-weight: bold;
-        }
-        
-        .silver {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-        
-        .perfect {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            font-weight: 600;
-        }
-        
-        .good {
-            background-color: #e3f2fd;
-            color: #1565c0;
-        }
-        
-        .medal-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-left: 8px;
-        }
-        
-        .gold-badge {
-            background: #d4af37;
-            color: white;
-        }
-        
-        .silver-badge {
-            background: #c0c0c0;
-            color: white;
-        }
-        
         footer {
             text-align: center;
             padding: 20px;
@@ -181,6 +140,25 @@
             h1 {
                 font-size: 2rem;
             }
+        }
+        
+        .stats-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .stats-summary h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .stats-summary p {
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -208,34 +186,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="gold">
+                    <tr>
                         <td class="rank">1</td>
                         <td>A君</td>
                         <td>studentA</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
                         <td class="total-score">400</td>
                     </tr>
-                    <tr class="silver">
+                    <tr>
                         <td class="rank">2</td>
                         <td>B君</td>
                         <td>studentB</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">80</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">80</td>
                         <td class="total-score">380</td>
                     </tr>
-                    <tr class="bronze">
+                    <tr>
                         <td class="rank">3</td>
                         <td>C君</td>
                         <td>studentC</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">100</td>
-                        <td class="score perfect">60</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">100</td>
+                        <td class="score">60</td>
                         <td class="total-score">360</td>
                     </tr>
                 </tbody>
