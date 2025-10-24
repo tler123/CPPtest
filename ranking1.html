@@ -292,20 +292,13 @@
             font-size: 14px;
         }
         
-        /* 新增的得分顯示區域樣式 */
+        /* 修改後的得分顯示區域樣式 */
         .score-display {
             background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
             padding: 15px 20px;
             border-bottom: 1px solid #e0e0e0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-        
-        .score-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
         
         .score-badge {
@@ -319,14 +312,10 @@
         }
         
         .problem-name {
+            margin-left: 15px;
             font-weight: 600;
             color: #1a3a8f;
             font-size: 1.1rem;
-        }
-        
-        .student-name {
-            color: #666;
-            font-size: 1rem;
         }
         
         @media (max-width: 768px) {
@@ -350,10 +339,6 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
-            }
-            
-            .score-info {
-                flex-wrap: wrap;
             }
         }
     </style>
@@ -456,13 +441,10 @@
                 <button class="close-button" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- 新增的得分顯示區域 -->
+                <!-- 修改後的得分顯示區域 -->
                 <div class="score-display">
-                    <div class="score-info">
-                        <span class="problem-name" id="modalProblemName">題目名稱</span>
-                        <span class="student-name" id="modalStudentName">學生姓名</span>
-                    </div>
                     <div class="score-badge" id="modalScore">100 分</div>
+                    <div class="problem-name" id="modalProblemName">problem2</div>
                 </div>
                 <div class="code-container" id="codeContent">
                     // 代碼將在這裡顯示
@@ -973,9 +955,8 @@ int main() {
         const codeContent = document.getElementById('codeContent');
         const closeModal = document.getElementById('closeModal');
         
-        // 新增的得分顯示元素
+        // 修改後的得分顯示元素
         const modalProblemName = document.getElementById('modalProblemName');
-        const modalStudentName = document.getElementById('modalStudentName');
         const modalScore = document.getElementById('modalScore');
         
         // 為所有分數連結添加點擊事件
@@ -990,7 +971,6 @@ int main() {
                 
                 // 設置得分顯示區域
                 modalProblemName.textContent = problem;
-                modalStudentName.textContent = `學生: ${student}`;
                 modalScore.textContent = `${score} 分`;
                 
                 // 設置代碼內容
