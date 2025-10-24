@@ -149,6 +149,7 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             display: inline-block;
+            cursor: pointer;
         }
         
         .score-link:hover {
@@ -217,6 +218,83 @@
             border-top: 1px solid #eaeaea;
         }
         
+        /* 代碼彈出視窗樣式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .code-container {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            padding: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
         @media (max-width: 768px) {
             .table-container {
                 overflow-x: auto;
@@ -228,6 +306,10 @@
             
             h1 {
                 font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
             }
         }
     </style>
@@ -260,30 +342,30 @@
                         <td class="rank">1</td>
                         <td>A君</td>
                         <td>studentA</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
+                        <td class="score"><span class="score-link" data-student="studentA" data-problem="problem1">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentA" data-problem="problem2">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentA" data-problem="problem3">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentA" data-problem="problem4">100</span></td>
                         <td class="total-score">400</td>
                     </tr>
                     <tr class="silver-row">
                         <td class="rank">2</td>
                         <td>B君</td>
                         <td>studentB</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">80</td>
+                        <td class="score"><span class="score-link" data-student="studentB" data-problem="problem1">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentB" data-problem="problem2">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentB" data-problem="problem3">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentB" data-problem="problem4">80</span></td>
                         <td class="total-score">380</td>
                     </tr>
                     <tr class="bronze-row">
                         <td class="rank">3</td>
                         <td>C君</td>
                         <td>studentC</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">100</td>
-                        <td class="score">60</td>
+                        <td class="score"><span class="score-link" data-student="studentC" data-problem="problem1">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentC" data-problem="problem2">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentC" data-problem="problem3">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentC" data-problem="problem4">60</span></td>
                         <td class="total-score">360</td>
                     </tr>
                 </tbody>
@@ -296,5 +378,369 @@
             <a href="測驗檔案.zip" class="file-download" download>📥 下載測驗檔案</a>
         </div>
     </div>
+    
+    <!-- 代碼彈出視窗 -->
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">學生代碼</h2>
+                <button class="close-button" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="code-container" id="codeContent">
+                    // 代碼將在這裡顯示
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 學生代碼數據庫
+        const studentCodeDatabase = {
+            studentA: {
+                problem1: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    // 計算階乘
+    long long factorial = 1;
+    for(int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    
+    cout << factorial << endl;
+    return 0;
+}`,
+                problem2: `#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    // 氣泡排序
+    for(int i = 0; i < n-1; i++) {
+        for(int j = 0; j < n-i-1; j++) {
+            if(arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+            }
+        }
+    }
+    
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+                problem3: `#include <iostream>
+#include <string>
+using namespace std;
+
+bool isPalindrome(string s) {
+    int left = 0, right = s.length() - 1;
+    while(left < right) {
+        if(s[left] != s[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+
+int main() {
+    string s;
+    cin >> s;
+    
+    if(isPalindrome(s)) {
+        cout << "是回文" << endl;
+    } else {
+        cout << "不是回文" << endl;
+    }
+    
+    return 0;
+}`,
+                problem4: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    
+    // 使用雙指針尋找兩數之和
+    sort(nums.begin(), nums.end());
+    int left = 0, right = n - 1;
+    
+    while(left < right) {
+        int sum = nums[left] + nums[right];
+        if(sum == target) {
+            cout << nums[left] << " " << nums[right] << endl;
+            return 0;
+        } else if(sum < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    
+    cout << "無解" << endl;
+    return 0;
+}`
+            },
+            studentB: {
+                problem1: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    // 遞迴計算階乘
+    long long factorial(int n) {
+        if(n <= 1) return 1;
+        return n * factorial(n-1);
+    }
+    
+    cout << factorial(n) << endl;
+    return 0;
+}`,
+                problem2: `#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    // 使用內建排序
+    sort(arr, arr+n);
+    
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+                problem3: `#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+    
+    string reversed = s;
+    reverse(reversed.begin(), reversed.end());
+    
+    if(s == reversed) {
+        cout << "是回文" << endl;
+    } else {
+        cout << "不是回文" << endl;
+    }
+    
+    return 0;
+}`,
+                problem4: `#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    unordered_map<int, int> map;
+    
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+        int complement = target - nums[i];
+        if(map.find(complement) != map.end()) {
+            cout << complement << " " << nums[i] << endl;
+            return 0;
+        }
+        map[nums[i]] = i;
+    }
+    
+    cout << "無解" << endl;
+    return 0;
+}`
+            },
+            studentC: {
+                problem1: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    long long result = 1;
+    int i = 1;
+    
+    while(i <= n) {
+        result = result * i;
+        i = i + 1;
+    }
+    
+    cout << result << endl;
+    return 0;
+}`,
+                problem2: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    // 選擇排序
+    for(int i = 0; i < n-1; i++) {
+        int minIndex = i;
+        for(int j = i+1; j < n; j++) {
+            if(arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+    
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+                problem3: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+    
+    bool isPal = true;
+    int len = s.length();
+    
+    for(int i = 0; i < len/2; i++) {
+        if(s[i] != s[len-1-i]) {
+            isPal = false;
+            break;
+        }
+    }
+    
+    if(isPal) {
+        cout << "是回文" << endl;
+    } else {
+        cout << "不是回文" << endl;
+    }
+    
+    return 0;
+}`,
+                problem4: `#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    
+    // 暴力解法
+    for(int i = 0; i < n-1; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(nums[i] + nums[j] == target) {
+                cout << nums[i] << " " << nums[j] << endl;
+                return 0;
+            }
+        }
+    }
+    
+    cout << "無解" << endl;
+    return 0;
+}`
+            }
+        };
+
+        // 彈出視窗功能
+        const modal = document.getElementById('codeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const codeContent = document.getElementById('codeContent');
+        const closeModal = document.getElementById('closeModal');
+        
+        // 為所有分數連結添加點擊事件
+        document.querySelectorAll('.score-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const student = this.getAttribute('data-student');
+                const problem = this.getAttribute('data-problem');
+                
+                // 設置彈出視窗標題
+                modalTitle.textContent = `${student} - ${problem} 代碼`;
+                
+                // 設置代碼內容
+                if(studentCodeDatabase[student] && studentCodeDatabase[student][problem]) {
+                    codeContent.textContent = studentCodeDatabase[student][problem];
+                } else {
+                    codeContent.textContent = `// 找不到 ${student} 的 ${problem} 代碼`;
+                }
+                
+                // 顯示彈出視窗
+                modal.style.display = 'flex';
+            });
+        });
+        
+        // 關閉彈出視窗
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // 點擊彈出視窗外部關閉
+        modal.addEventListener('click', function(e) {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // ESC鍵關閉彈出視窗
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
