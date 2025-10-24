@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking</title>
+    <title>第一次測驗排行榜</title>
     <style>
         * {
             margin: 0;
@@ -112,7 +112,7 @@
         
         th {
             padding: 18px 15px;
-            text-align: left;
+            text-align: center;
             font-weight: 600;
             font-size: 1.1rem;
         }
@@ -128,18 +128,16 @@
         
         td {
             padding: 16px 15px;
+            text-align: center;
         }
         
         .rank {
             font-weight: bold;
-            text-align: center;
-            width: 80px;
             font-size: 1.1rem;
         }
         
         .score {
             font-weight: 600;
-            text-align: center;
         }
         
         .score-link {
@@ -161,7 +159,6 @@
         .total-score {
             font-weight: bold;
             font-size: 1.1rem;
-            text-align: center;
         }
         
         .gold-row {
@@ -323,6 +320,14 @@
     </header>
     
     <div class="container">
+        <div class="info-section">
+            <h3>測驗說明</h3>
+            <p>本次測驗共包含4個題目，每題滿分100分，總分400分。點擊分數可以查看該學生的解題代碼。</p>
+            <div class="announcement-box">
+                <p>📢 注意：前三名學生將獲得獎學金資格，請於本週五前確認個人資料。</p>
+            </div>
+        </div>
+        
         <div class="table-container">
             <table>
                 <thead>
@@ -368,6 +373,26 @@
                         <td class="score"><span class="score-link" data-student="studentC" data-problem="problem4">60</span></td>
                         <td class="total-score">360</td>
                     </tr>
+                    <tr>
+                        <td class="rank">4</td>
+                        <td>D君</td>
+                        <td>studentD</td>
+                        <td class="score"><span class="score-link" data-student="studentD" data-problem="problem1">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentD" data-problem="problem2">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentD" data-problem="problem3">80</span></td>
+                        <td class="score"><span class="score-link" data-student="studentD" data-problem="problem4">60</span></td>
+                        <td class="total-score">340</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">5</td>
+                        <td>E君</td>
+                        <td>studentE</td>
+                        <td class="score"><span class="score-link" data-student="studentE" data-problem="problem1">100</span></td>
+                        <td class="score"><span class="score-link" data-student="studentE" data-problem="problem2">80</span></td>
+                        <td class="score"><span class="score-link" data-student="studentE" data-problem="problem3">80</span></td>
+                        <td class="score"><span class="score-link" data-student="studentE" data-problem="problem4">60</span></td>
+                        <td class="total-score">320</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -393,6 +418,12 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 程式設計測驗系統 | 資料最後更新: 2023-10-15</p>
+        </div>
+    </footer>
 
     <script>
         // 學生代碼數據庫
@@ -509,15 +540,15 @@ int main() {
                 problem1: `#include <iostream>
 using namespace std;
 
+// 遞迴計算階乘
+long long factorial(int n) {
+    if(n <= 1) return 1;
+    return n * factorial(n-1);
+}
+
 int main() {
     int n;
     cin >> n;
-    
-    // 遞迴計算階乘
-    long long factorial(int n) {
-        if(n <= 1) return 1;
-        return n * factorial(n-1);
-    }
     
     cout << factorial(n) << endl;
     return 0;
@@ -691,6 +722,200 @@ int main() {
     }
     
     cout << "無解" << endl;
+    return 0;
+}`
+            },
+            studentD: {
+                problem1: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    long long factorial = 1;
+    for(int i = 1; i <= n; i++) {
+        factorial = factorial * i;
+    }
+    
+    cout << factorial;
+    return 0;
+}`,
+                problem2: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    // 簡單排序
+    for(int i = 0; i < n; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    
+    return 0;
+}`,
+                problem3: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+    
+    int len = s.length();
+    bool palindrome = true;
+    
+    for(int i = 0; i < len; i++) {
+        if(s[i] != s[len-1-i]) {
+            palindrome = false;
+        }
+    }
+    
+    if(palindrome) {
+        cout << "是回文";
+    } else {
+        cout << "不是回文";
+    }
+    
+    return 0;
+}`,
+                problem4: `#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    
+    bool found = false;
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(i != j && nums[i] + nums[j] == target) {
+                cout << nums[i] << " " << nums[j];
+                found = true;
+                break;
+            }
+        }
+        if(found) break;
+    }
+    
+    if(!found) {
+        cout << "無解";
+    }
+    
+    return 0;
+}`
+            },
+            studentE: {
+                problem1: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    int result = 1;
+    for(int i = 2; i <= n; i++) {
+        result = result * i;
+    }
+    
+    cout << result;
+    return 0;
+}`,
+                problem2: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    // 簡單排序
+    for(int i = 0; i < n-1; i++) {
+        for(int j = 0; j < n-1; j++) {
+            if(arr[j] > arr[j+1]) {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+    
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    
+    return 0;
+}`,
+                problem3: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+    
+    string reversed = "";
+    for(int i = s.length()-1; i >= 0; i--) {
+        reversed += s[i];
+    }
+    
+    if(s == reversed) {
+        cout << "是回文";
+    } else {
+        cout << "不是回文";
+    }
+    
+    return 0;
+}`,
+                problem4: `#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    
+    for(int i = 0; i < n; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(nums[i] + nums[j] == target) {
+                cout << nums[i] << " " << nums[j];
+                return 0;
+            }
+        }
+    }
+    
+    cout << "無解";
     return 0;
 }`
             }
