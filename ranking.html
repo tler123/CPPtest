@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一次測驗排行榜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .back-button:hover {
+            background: white;
+            color: #1a3a8f;
+            border-color: white;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .info-section h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eaeaea;
+            transition: all 0.3s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+        
+        td {
+            padding: 16px 15px;
+            text-align: center;
+        }
+        
+        .rank {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .bold-text {
+            font-weight: bold;
+        }
+        
+        .score {
+            font-weight: 600;
+        }
+        
+        .score-link {
+            color: #1a3a8f;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .score-link:hover {
+            background-color: #1a3a8f;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .total-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .gold-row {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+        }
+        
+        .silver-row {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+        }
+        
+        .bronze-row {
+            background: linear-gradient(135deg, #fef7e6 0%, #fdebd0 100%);
+        }
+        
+        .final-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .file-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .file-section h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .file-download {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .file-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 58, 143, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        /* 代碼彈出視窗樣式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5caa 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .code-container {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            padding: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        /* 修改後的得分顯示區域樣式 */
+        .score-display {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .score-badge {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        }
+        
+        .problem-name {
+            margin-left: 15px;
+            font-weight: 600;
+            color: #1a3a8f;
+            font-size: 1.1rem;
+        }
+        
+        .note-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .note-section h3 {
+            color: #1a3a8f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 1200px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .score-display {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>第一次測驗排行榜</h1>
+            <a href="index.html" class="back-button">← 返回主目錄</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="info-section">
+            <h3>說明</h3>
+            <p>本次測驗共包含 4 題，每題滿分 100 分，總分 400 分。點擊分數可以查看該學生的解題代碼。</p>
+            <p>因應學生在測驗過程中的不良行為進行適當的扣分。</p>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>用戶名</th>
+                        <th>trip</th>
+                        <th>buildings</th>
+                        <th>string</th>
+                        <th>knockout</th>
+                        <th>總分</th>
+                        <th>不良行為</th>
+                        <th>扣分</th>
+                        <th>最終分</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingTableBody">
+                    <!-- 表格内容将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="note-section">
+            <h3>備註</h3>
+            <p>萬嘉陽同學因被發現使用 Deepseek 作答，被判 0 分。</p>
+        </div>
+    </div>
+    
+    <!-- 代碼彈出視窗 -->
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">學生代碼</h2>
+                <button class="close-button" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 修改後的得分顯示區域 -->
+                <div class="score-display">
+                    <div class="score-badge" id="modalScore">100 分</div>
+                    <div class="problem-name" id="modalProblemName">trip</div>
+                </div>
+                <div class="code-container" id="codeContent">
+                    // 代碼將在這裡顯示
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Excel数据转换为JavaScript对象
+        const studentsData = [
+            { rank: 1, name: "林暐然", username: "MarquisMIT", trip: 100, buildings: 100, string: 100, knockout: 100, total: 400, note: "無", penalty: 0, finalScore: 400 },
+            { rank: 2, name: "余汶憲", username: "Wisley_PCMS", trip: 100, buildings: 70, string: 100, knockout: 100, total: 370, note: "喧嘩", penalty: 50, finalScore: 320 },
+            { rank: 3, name: "謝焯軒", username: "AdrianChe", trip: 100, buildings: 70, string: 100, knockout: 0, total: 270, note: "無", penalty: 0, finalScore: 270 },
+            { rank: 3, name: "施宇森", username: "TAN0302", trip: 100, buildings: 70, string: 100, knockout: "-", total: 270, note: "無", penalty: 0, finalScore: 270 },
+            { rank: 5, name: "謝皓匡", username: "JamesChe55", trip: 100, buildings: 100, string: 70, knockout: "-", total: 270, note: "交談", penalty: 30, finalScore: 240 },
+            { rank: 6, name: "許惠喬", username: "pcmsP6A24", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "無", penalty: 0, finalScore: 200 },
+            { rank: 6, name: "蔡昊江", username: "tsaihaojiang", trip: 100, buildings: 100, string: 0, knockout: 0, total: 200, note: "無", penalty: 0, finalScore: 200 },
+            { rank: 6, name: "馮子丞", username: "jaysonfroooong", trip: 100, buildings: 100, string: 0, knockout: "-", total: 200, note: "無", penalty: 0, finalScore: 200 },
+            { rank: 9, name: "沈以恆", username: "Sam_I_Hang", trip: 100, buildings: 100, string: 10, knockout: "-", total: 210, note: "交談", penalty: 30, finalScore: 180 },
+            { rank: 9, name: "蔣梓銘", username: "Leojiangchimeng", trip: 100, buildings: 80, string: "-", knockout: "-", total: 180, note: "無", penalty: 0, finalScore: 180 },
+            { rank: 11, name: "黃宇廷", username: "Kiteteth0323", trip: 100, buildings: 70, string: "-", knockout: "-", total: 170, note: "無", penalty: 0, finalScore: 170 },
+            { rank: 12, name: "李峻皓", username: "pcmsp5a12", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "喧嘩", penalty: 50, finalScore: 150 },
+            { rank: 13, name: "李沛穎", username: "PCMSP5A10", trip: 100, buildings: 70, string: 10, knockout: "-", total: 180, note: "喧嘩", penalty: 50, finalScore: 130 },
+            { rank: 14, name: "陳浩軒", username: "s16505913", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "無", penalty: 0, finalScore: 100 },
+            { rank: 14, name: "姚怡辰", username: "smgfxyjq_shiming", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "無", penalty: 0, finalScore: 100 },
+            { rank: 16, name: "呂政恆", username: "KaydenLoi", trip: 0, buildings: 100, string: "-", knockout: "-", total: 100, note: "交談", penalty: 30, finalScore: 70 },
+            { rank: 16, name: "陳思瀚", username: "Rafael23KGYM", trip: 0, buildings: 100, string: "-", knockout: "-", total: 100, note: "交談", penalty: 30, finalScore: 70 },
+            { rank: 18, name: "韓鎛懋", username: "Coconutgodz", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "喧嘩", penalty: 50, finalScore: 50 },
+            { rank: 19, name: "李君堯", username: "Zephyrthegoat", trip: 0, buildings: 15, string: "-", knockout: "-", total: 15, note: "無", penalty: 0, finalScore: 15 },
+            { rank: 20, name: "江子朗", username: "pcmsp5a03", trip: 0, buildings: "-", string: "-", knockout: "-", total: 0, note: "交談", penalty: 30, finalScore: 0 },
+            { rank: 20, name: "周樂天", username: "S2B_007", trip: 0, buildings: 0, string: "-", knockout: "-", total: 0, note: "無", penalty: 0, finalScore: 0 },
+            { rank: 20, name: "萬嘉陽", username: "Unkonw_01", trip: 100, buildings: 55, string: "-", knockout: "-", total: 155, note: "作弊", penalty: 155, finalScore: 0 }
+        ];
+
+        // 生成表格行
+        const tableBody = document.getElementById('rankingTableBody');
+        
+        studentsData.forEach(student => {
+            const row = document.createElement('tr');
+            
+            // 添加金银铜牌样式
+            if (student.rank === 1) {
+                row.classList.add('gold-row');
+            } else if (student.rank === 2) {
+                row.classList.add('silver-row');
+            } else if (student.rank === 3) {
+                row.classList.add('bronze-row');
+            }
+            
+            row.innerHTML = `
+                <td class="rank">${student.rank}</td>
+                <td class="bold-text">${student.name}</td>
+                <td class="bold-text">${student.username}</td>
+                <td class="score"><span class="score-link" data-student="${student.username}" data-problem="trip">${student.trip}</span></td>
+                <td class="score"><span class="score-link" data-student="${student.username}" data-problem="buildings">${student.buildings}</span></td>
+                <td class="score"><span class="score-link" data-student="${student.username}" data-problem="string">${student.string}</span></td>
+                <td class="score"><span class="score-link" data-student="${student.username}" data-problem="knockout">${student.knockout}</span></td>
+                <td class="total-score">${student.total}</td>
+                <td class="bold-text">${student.note}</td>
+                <td class="bold-text">${student.penalty}</td>
+                <td class="final-score">${student.finalScore}</td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+
+        // 學生代碼數據庫
+        const studentCodeDatabase = {
+            MarquisMIT: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int a; cin >> a;
+    int total1 = 0;
+    int total2 = 0;
+    for (int i = 1; i <= a; i++)
+    {
+        total1 += i;
+        int b;
+        cin >> b;
+        total2 += b;
+    }
+    if (total1 <= total2)
+    {
+        cout << "YES";
+    }
+    else cout << "NO";
+    return 0;
+}`,
+                buildings: `#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int a; cin >> a;
+    int max1 = 0;
+    int max2 = 0;
+    for (int i = 0; i < a; i++)
+    {
+        int b;
+        cin >> b;
+        if (b > max1 and b > max2)
+        {
+            max1 = max2;
+            max2 = b;
+        }
+        if (b > max1 and b != max2)
+        {
+            max1 = b;
+        }
+    }
+    cout << max2 - max1;
+    return 0;
+}`,
+                string: `#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    long long int c; cin >> c;
+    long long int t; cin >> t;
+    while (t--)
+    {
+        string a;
+        cin >> a;
+        long long int b;
+        cin >> b;
+        long long int total = 1;
+        if (a.size() % 2 == 0)
+        {
+            total = 1;
+            for (long long int i = 0; i < a.size() / 2; i++)
+            {
+                if ((a[i] >= 'A' and a[i] <= 'Z') and (a[a.size() - 1 - i] >= 'A' and a[a.size() - 1 - i] <= 'Z'))
+                {
+                    total *= 26;
+                    total = total % b;
+                }
+                else if (!(a[i] >= 'A' and a[i] <= 'Z') and !(a[a.size() - 1 - i] >= 'A' and a[a.size() - 1 - i] <= 'Z'))
+                {
+                    if (a[i] != a[a.size() - 1 - i])
+                    {
+                        total = 0;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            total = 1;
+            for (long long int i = 0; i < (a.size() + 1) / 2; i++)
+            {
+                if (i == a.size() - 1 - i)
+                {
+                    if (a[i] >= 'A' and a[i] <= 'Z')
+                    {
+                        total *= 26;
+                        total = total % b;
+                    }
+                }
+                else if ((a[i] >= 'A' and a[i] <= 'Z') and (a[a.size() - 1 - i] >= 'A' and a[a.size() - 1- i] <= 'Z'))
+                {
+                    total *= 26;
+                    total = total % b;
+                }
+                else if (!(a[i] >= 'A' and a[i] <= 'Z') and !(a[a.size() - 1 - i] >= 'A' and a[a.size() - 1 - i] <= 'Z'))
+                {
+                    if (a[i] != a[a.size() - 1 - i])
+                    {
+                        total = 0;
+                        break;
+                    }
+                }
+            }
+        }
+        cout << total << '\n';
+    }
+    return 0;
+}`,
+                knockout: `#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    long long int a;
+    cin >> a;
+    vector<long long int> v(pow(2, a), 0);
+    vector<long long int> p(pow(2, a), 0);
+    for (long long int i = 0; i < pow(2, a); i++)
+    {
+        cin >> v[i];
+        p[i] = i + 1;
+    }
+    long long int jump = 1;
+    for (long long int ze = 1; ze <= a; ze++)
+    {
+        for (long long int i = 0; i < pow(2, a); i += jump * 2)
+        {
+            if (v[i] >= v[i + jump])
+            {
+                cout << p[i + jump] << ' ';
+            }
+            else
+            {
+                cout << p[i] << ' ';
+                v[i] = v[i + jump];
+                p[i] = p[i + jump];
+            }
+        }
+        cout << "\n";
+        jump *= 2;
+    }
+    return 0;
+}`
+            },
+            Wisley_PCMS: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+signed main()
+{
+    int n; cin>>n;
+    int ans = 0;
+    for(int i = 1; i <= n; i++)
+    {
+        int a;
+        cin>>a;
+        ans+=a;
+    }
+    if (ans>=(n*n+n)/2) cout<<"YES";
+    else cout<<"NO";
+}`,
+                buildings: `#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+signed main()
+{
+    int n; cin>>n;
+    int a[10001];
+    for(int i = 1; i <= n; i++)
+    {
+        cin>>a[i];
+    }
+    sort(a,a+n+1);
+    for(int i = n-1; i >= 1; i--)
+    {
+        if (a[i] != a[n])
+        {
+            cout<<a[n]-a[i];
+            break;
+        }
+    }
+}`,
+                string: `#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+signed main()
+{
+    int c; cin>>c;
+    int t; cin>>t;
+    while(t--)
+    {
+        string s; cin>>s;
+        int p; cin>>p;
+        int ans = 1;
+        int n = s.size();
+        bool st = false;
+        for(int i = 0; i < (n+1)/2; i++)
+        {
+            if (s[i]!=s[n-i-1] && s[i]>='a' && s[n-i-1]>='a')
+            {
+                cout<<0<<endl;
+                st = true;
+                break;
+            }
+        }
+        if (st == true) continue;
+        for(int i = 0; i < (n+1)/2; i++)
+        {
+            if (s[i]<'a' && s[n-i-1]<'a')
+            {
+                ans*=26;
+                ans%=p;
+            }
+        }
+        cout<<ans<<endl;
+        
+    }
+}`,
+                knockout: `#include <bits/stdc++.h>
+using namespace std;
+signed main()
+{
+    int n; cin>>n;
+    int m = pow(2,n);
+    int a[m+1];
+    int b[m+1];
+    
+    for(int i = 1; i <= m; i++)
+    {
+        cin>>a[i];
+        b[i] = i;
+    }
+    for(int i = 1; i <= n; i++)
+    {
+        for(int j = pow(2,i); j <= m; j+=pow(2,i))
+        {
+            int x = j-pow(2,i-1);
+            if (a[x]<a[j])
+            {
+                cout<<b[x]<<" ";
+            }
+            else
+            {
+                swap(a[x],a[j]);
+                swap(b[x],b[j]);
+                cout<<b[x]<<" ";
+            }
+        }
+        cout<<endl;
+    }
+    
+}`
+            },
+            AdrianChe: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	cin.tie(0), cout.tie(0);
+	ios_base::sync_with_stdio(0);
+	
+	long long n; cin >> n;
+	long long g = 0, c = 0;
+	for (long long i = 1; i <= n; i++){
+		g += i;
+		long long x; cin >> x;
+		c += x;
+	}
+	
+	if (c < g) printf("NO");
+	else printf("YES");
+	
+	return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	cin.tie(0), cout.tie(0);
+	ios_base::sync_with_stdio(0);
+	
+	long long n; cin >> n;
+	vector<long long> h(n, 0);
+	for (long long i = 0; i < n; i++) cin >> h[i];
+	
+	sort(h.begin(), h.end(), [](long long x, long long y){
+		return x > y;
+	});
+	
+	long long a = h[0], b = -1;
+	for (long long k : h){
+		if (k != a){
+			b = k;
+			break;
+		}
+	}
+	
+	printf("%lld", a-b);
+	
+	return 0;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+
+bool isB(char c){
+	return 'A' <= c && c <= 'Z';
+}
+
+int main(){
+	cin.tie(0), cout.tie(0);
+	ios_base::sync_with_stdio(0);
+	
+	int c; cin >> c;
+	long long T; cin >> T;
+	while (T--){
+		string s; cin >> s;
+		long long p; cin >> p;
+		long long tot = 1;
+		for (long long i = 0; i < s.size() / 2 + s.size() % 2; i++){
+			char cur = s[i], rev = s[s.size() - i - 1];
+			if (isB(cur) && isB(rev)){
+				tot = tot * 26 % p;
+			} else if (!isB(cur) && !isB(rev) && cur != rev){
+				tot = 0;
+				break;
+			}
+		}
+		
+		printf("%lld\n", tot % p);
+	}
+	
+	return 0;
+}`,
+                knockout: `#include<bits/stdc++.h>
+using namespace std;
+
+struct Node{
+	long long x, y;
+};
+
+int main(){
+	cin.tie(0), cout.tie(0);
+	ios_base::sync_with_stdio(0);
+	
+	long long n; cin >> n;
+	long long p = pow(2, n);
+	vector<Node> a(p+1, Node{0, 1});
+	for (long long i = 1; i <= p; i++) cin >> a[i].x;
+	
+	long long prev = -1;
+	for (long long i = 1; i <= n; i++){
+		for (long long j = 1; j <= p; j++){
+			if (a[j].y == 0) continue;
+			if (prev == -1){
+				prev = j;
+				continue;
+			} else {
+				if (a[j].x > a[prev].x){
+					a[prev].y = 0;
+					printf("%lld ", prev);
+					prev = -1;
+				} else {
+					a[j].y = 0;
+					printf("%lld ", j);
+					prev = -1;
+				}
+			}
+		}
+		printf("\n");
+	}
+	
+	return 0;
+}`
+            },
+            TAN0302: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    long long sum_cat = 0;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        sum_cat += x;
+    }
+    
+    long long sum_g = 1LL * n * (n + 1) / 2;
+    
+    if (sum_cat >= sum_g) {
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl;
+    }
+    
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+     int n;
+    cin >> n;
+    
+    int max1 = -1, max2 = -1;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        
+        if (x > max1) {
+            max2 = max1;  
+            max1 = x;     
+        } else if (x > max2 && x < max1) {
+            max2 = x;     
+        }
+    }
+    
+    cout << max1 - max2 << endl;
+    
+    return 0;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+        int c, T;
+    cin >> c >> T;
+    
+    while (T--) {
+        string s;
+        int p;
+        cin >> s >> p;
+        
+        int n = s.length();
+        long long ans = 1;
+        bool valid = true;
+        
+        for (int i = 0; i <= (n - 1) / 2; i++) {
+            int j = n - 1 - i;
+            
+            if (i == j) {
+                
+                if (isupper(s[i])) {
+                    ans = (ans * 26) % p;
+                }
+                
+            } else {
+                if (islower(s[i]) && islower(s[j])) {
+                    
+                    if (s[i] != s[j]) {
+                        valid = false;
+                        break;
+                    }
+                    
+                } else if (islower(s[i]) && isupper(s[j])) {
+                    
+                } else if (isupper(s[i]) && islower(s[j])) {
+                    
+                } else {
+                    
+                    ans = (ans * 26) % p;
+                }
+            }
+        }
+        
+        if (!valid) {
+            cout << 0 << endl;
+        } else {
+            cout << ans % p << endl;
+        }
+    }
+    
+    return 0;
+}
+
+    `
+            },
+            JamesChe55: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n;cin>>n;
+	int cans=0,ans=0;
+	for(int i=1;i<=n;i++){
+		int tmp;
+		ans+=i;
+		cin>>tmp;
+		cans+=tmp;
+	}
+	if(ans>cans)cout<<"NO";
+	else cout<<"YES";
+	return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n;cin>>n;
+	int h[n+1]={0};
+	for(int i=1;i<=n;i++){
+		cin>>h[i];
+	}
+	sort(h+1,h+n+1);
+	for(int i=n-1;i>=0;i--){
+		if(h[n]!=h[i]){
+			cout<<h[n]-h[i];
+			break;
+		}
+	}
+	return 0;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int c;cin>>c;
+	int t;cin>>t;
+	for(int i=0;i<t;i++){
+		string s;cin>>s;
+		int p,ss=s.size(),ans=1;cin>>p;
+		for(int j=0;j<=ss/2;j++){
+			if(s[j]==s[ss-j-1]){
+                if(j==ss-j-1){
+                    ans*=1;
+                    if(s[j]>='A'&&s[j]<='Z'){
+                        ans*=26;
+                    }
+                }
+                else if(s[j]>='A'&&s[j]<='Z'){
+                    ans*=26;
+                }
+            }
+            else if((s[j]>='A'&&s[j]<='Z')&&(s[ss-j-1]>='A'&&s[ss-j-1]<='Z')){
+                ans*=26;
+            }
+            else if((s[j]>='A'&&s[j]<='Z')||(s[ss-j-1]>='A'&&s[ss-j-1]<='Z')){
+                ans*=1;
+            }
+            else{
+                ans=0;
+            }
+            ans%=p;
+		}
+		cout<<ans<<'\n';
+	}
+	return 0;
+}`,
+            },
+            pcmsP6A24: {
+                trip: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n,a[1000],b=0,c=0;
+    cin>>n;
+    for(int j=0;j<n;j++){
+        cin>>a[j];
+        c=c+a[j];
+    }
+    for(int i=1;i<=n;i++){
+        b=b+i;
+    }
+    
+    if(c<b){
+        cout<<"NO";
+    }
+    else{
+        cout<<"YES";
+    }
+    
+
+    return 0;
+}`,
+                buildings: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n,h[1000],a,c=0,d=0;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>h[i];
+    }
+    for(int j=0;j<n;j++){
+        if(h[j]>c){
+            c=h[j];
+        }
+    }
+    for(int k=0;k<n;k++){
+        if(h[k]>d&&h[k]<c){
+            d=h[k];
+        }
+    }
+    a=c-d;
+    cout<<a;
+
+    return 0;
+}`,
+            },
+            tsaihaojiang: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n; cin>>n;
+    long long p = 0, q = 0;
+    for (int i = 1; i<=n; i++) p+=i;
+    for (int i = 0; i<n; i++) {
+        int k; cin>>k; 
+        q += k;
+    }
+    cout<<(p <= q ? "YES" : "NO");
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+
+bool cmp(int x, int y) {
+    return x > y;
+}
+int main() {
+    int n; cin>>n;
+    vector<int>a(n, 0);
+    for (int i = 0; i<n; i++) cin>>a[i];
+    sort(a.begin(), a.end(), cmp);
+    int h1 = a[0];
+    int ptr = 1;
+    while (a[ptr] == h1) ptr++;
+    int h2 = a[ptr];
+    cout<<h1-h2;
+    return 0;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    freopen("test.in", "r", stdin);
+    int c, q; cin>>c>>q;
+    while (q--) {
+        string s; int MOD; cin>>s>>MOD;
+        int k = s.size();
+        long long ans = 1;
+        int wer = 0;
+        for (int i = 1; i<=(k + k % 2) / 2; i++) {
+            if ((s[i-1] >= 'A' && s[i-1] <= 'Z') && (s[k - i] >= 'A' && s[k - i] <= 'Z')) {
+                if (i != k + k % 2) ans = (((ans * 26) % MOD) * 26) % MOD;
+                else ans = ((ans * 26) % MOD);
+            } else if ((s[i-1] >= 'a' && s[i-1] <= 'z') && (s[k - i] >= 'a' && s[k - i] <= 'z') && s[i-1] != s[k-i]) {
+                cout<<0<<"\n"; 
+                wer = 1;
+                break;
+            }
+        }
+        if (wer == 1) continue;
+        cout<<ans % MOD<<"\n";
+    }
+    return 0;
+}`,
+                knockout: `#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    long long int n; cin>>n;
+    long long int a, b; cin>>a>>b;
+    if (a >= b) cout<<b;
+    else cout<<a;
+    return 0;
+}`
+            },
+            jaysonfroooong: {
+                trip: `#include <iostream>
+using namespace std;
+long long int n, sumg=0, sumcat=0;
+int main(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        long long int o; cin>>o;
+        sumg+=i;
+        sumcat+=o;
+    }if(sumcat<sumg)cout<<"NO";
+    else cout<<"YES";
+}`,
+                buildings: `#include <iostream>
+#include <algorithm>
+using namespace std;
+long long n, x=0, b=0;
+int main(){
+    cin>>n;
+    for(int i=0;i<n;i++){
+        long long o; cin>>o;
+        if(x<o){
+            b=x;
+            x=o;
+        }
+        if(b<o&&o<x){
+            b=o;
+        }
+    }cout<<x-b;
+}`,
+                string: `#include <iostream>
+#include <algorithm>
+using namespace std;
+long long int c, T;
+int main(){
+    cin>>c>>T;
+    while(T--){
+        string s;
+        long long int ans=1, p;
+        cin>>s>>p;
+        for(int i=0;i<=s.size()/2;i++){
+            char A=s[i], B=s[s.size()-1-i];
+            if(A<'a'&&B<'a')ans=ans%p*26%p;
+            else if((A>='a'&&B>='a')&&A!=B)ans*=0;
+        }cout<<ans;
+    }
+}`,
+            },
+            Sam_I_Hang: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	long long n;
+	cin>>n;
+	long long a[n],cnt1=0,cnt2=0;
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+		cnt1+=i+1;
+		cnt2+=a[i];
+	}
+	if(cnt1<=cnt2)cout<<"YES";
+	else cout<<"NO";
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	long long n;
+	cin>>n;
+	long long a[n],cnt1=0,cnt2=0;
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+		cnt1=max(cnt1,a[i]);
+	}
+	for(int i=0;i<n;i++){
+		if(a[i]>cnt2&&a[i]!=cnt1)cnt2=a[i];
+	}
+	cout<<cnt1-cnt2;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	int c;
+	cin>>c;
+	long long q;
+	cin>>q;
+	while(q--){
+		string s;
+		cin>>s;
+		long long n;
+		cin>>n;
+		string ss=s;
+		reverse(ss.begin(),ss.end());
+		long long ans=1;
+		for(int i=0;i<=s.size()/2;i++){
+			if(s[i]>='A'&&s[i]<='Z'&&ss[i]>='A'&&ss[i]<='Z')ans*=26;
+			if(not(s[i]==ss[i]||(s[i]>='A'&&s[i]<='Z')||(ss[i]>='A'&&ss[i]<='Z')))ans=0;
+		}
+		cout<<ans%n<<'\n';
+	}
+}`,
+            },
+            Leojiangchimeng: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    int score = n * (n + 1) / 2;
+    int cscore = 0;
+    for (int i = 0; i < n; i++) {
+        cscore += a[i];
+    }
+    if (cscore >= score) {
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl; 
+    }
+    return 0;
+}`,
+                buildings: `#include <bits/stdc++.h> 
+using namespace std;
+int main() {
+    int n;
+    cin >> n; 
+    vector<int> h(n); 
+    for (int i = 0; i < n; i++) {
+        cin >> h[i];
+    }
+    sort(h.begin(), h.end());
+    int max_h = h[n - 1];
+    int second_max_h = h[n - 2];
+    int h_difference = max_h - second_max_h;
+    cout << h_difference << endl;
+    return 0;
+}`,
+            },
+            Kiteteth0323: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n; cin >> n;
+    int a[n];
+    int count = 0;
+    int countg = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        countg = countg + i + 1;
+    }
+    for (int i = 0; i < n; i++) {
+        count = count + a[i];
+    }
+    if (count > countg) {
+        printf("YES");
+    } else if (countg > count) {
+        printf("NO");
+    }
+    return 0;
+}`,
+                buildings: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n; cin >> n;
+    int count = n-1;
+    vector<long long int> a(n, 0);
+    for (int i = 0; i < n; i++) cin >> a[i];
+    sort(a.begin(), a.end());
+    while (true) {
+        if (a[n-1] != a[count]) {
+            printf("%lld", a[n-1] - a[count]);
+            break;
+        } else {
+            count--;
+        }
+    }
+    return 0;
+}`,
+            },
+            pcmsp5a12: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+
+int main () {
+    int a, n;
+    cin >> a;
+    int count = 0;
+    int count2 = 0;
+    for (int i = 1; i <= a; i++) {
+        cin >> n;
+        count += n; 
+    }
+    count2 = (a * (a + 1)) / 2;
+    if (count2 <= count) {
+        cout << "YES";
+    } else {
+        cout << "NO";
+    }
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n, a = 0, b = 0, c = 0; cin>>n;    
+    int d[n];
+    for(int i = 0; i < n; i++){
+        cin>>d[i];
+        if (a < d[i]){
+            swap(a, d[i]);
+        }
+        if (b < d[i] && d[i]!=a){
+            b = d[i];
+        }
+    }
+    c = a - b;
+    cout<<c;
+    return 0;
+}`,
+            },
+            PCMSP5A10: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    int c = 0, p = 0;
+    for(int i=1;i<=n;i++){
+        int a;
+        cin>>a;
+        c+=a;
+        p+=i;
+    }
+    if(c<p){
+        cout<<"NO";
+    }else{
+        cout<<"YES";
+    }
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<int> a(n,0);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    for(int i=0;i<n-1;i++){
+    	for(int j=0;j<n-i-1;j++){
+    		if(a[j]<a[j+1]){
+    			swap(a[j],a[j+1]);
+			}
+		}
+	}
+    int max= a[0];
+    for(int i = 0;i<n;i++){
+        if(a[i]!=max){
+            cout<<max-a[i];
+            return 0;
+        }
+    }
+    return 0;
+}`,
+                string: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int c;
+    cin>>c;
+    int t;
+    cin>>t;
+    for(int T=0;T<t;T++){
+        string s;
+        int p=0;
+        cin>>s;
+        cin>>p;
+        int ans=1;
+        bool flag = true;
+        for(int i=0;i<s.size();i++){
+            if(s[i]>='a'&&s[i]<='z'){
+                if(s[s.size()-i-1]>='A'&&s[s.size()-i-1]<='Z'){
+                    s[s.size()-i-1]=s[i];
+                }
+                else if(s[i]!=s[s.size()-i-1]){
+                    s[s.size()-i-1]='0';
+                }
+            }
+        }
+        for(int i=0;i<s.size();i++){
+            if(s[i]>='A'&&s[i]<='Z'){
+                ans*=26%p;
+                flag = false;
+            }
+            if(s[i]=='0'){
+                ans = 0;
+                flag = false;
+            }
+        }
+        if(flag){
+            cout<<1<<endl;
+        }else{
+        	cout<<ans<<endl;
+		}
+    }
+    return 0;
+}`,
+            },
+            s16505913: {
+                trip: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int b = 0;
+    int a = 0;
+    
+    for (int i = n; i > 0; i--) {
+        int y;
+        cin >> y;
+        b = b + y;
+    for (int i = n; i > 0; i--) {
+        a = a + n;
+        n = n - 1;
+    }
+
+    }
+    if (a > b || a == b) {
+        printf("NO");
+    } 
+    else if (a < b) {
+        printf("YES");
+    }
+    return 0;
+}`,
+            },
+            smgfxyjq_shiming: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+   
+
+    int n;
+    cin >> n;
+
+    long long c= 0;       
+    for (int i = 0; i < n; i++) {
+        int r;
+        cin >> r;
+        c+= r;
+    }
+
+    long long g = 1LL * n * (n + 1) / 2; 
+    if (c >= g){
+        printf("YES");
+    }else{
+        printf("NO");
+    }
+
+    return 0;
+}`,
+            },
+            KaydenLoi: {
+                trip: `#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int n;cin>>n;
+    int cat=0;
+    int g=0;
+    for (int i = 1;i<n+1;i++){
+        int temp;cin>>temp;
+        cat+=temp;
+        g+=i;
+    }
+    if(cat<g){
+        cout<<"No"<<endl;
+    }
+    else{
+        cout<<"Yes"<<endl;
+    }
+    
+    return 0;
+}`,
+                buildings: `#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+int main()
+{
+    long long int n;cin>>n;
+    long long int sh=0;
+    long long int ht=0;
+    for (int i = 0;i<n;i++){
+        long long int temp;cin>>temp;
+        if (temp>ht){
+            sh=ht;
+            ht=temp;
+        }
+        else if(temp>sh and temp<ht){
+            sh=temp;
+        }
+    }
+    cout<<ht-sh<<endl;
+    return 0;
+}`,
+            },
+            Rafael23KGYM: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n, a, b; cin>>n;
+    int x[n];
+    for(int i = 0; i < n; i++){
+        cin>>x[i];
+        b = b + x[i];
+    }
+    for(int j = n; j > 0; j--){
+        a = a + j;
+    }
+    if (b > a){
+        cout<<"YES";
+    }else{
+        cout<<"NO";
+    }
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n, a = 0, b = 0, c = 0; cin>>n;    
+    int h[n];
+    for(int i = 0; i < n; i++){
+        cin>>h[i];
+        if (a < h[i]){
+            swap(a, h[i]);
+        }
+        if (b < h[i] && h[i]!=a){
+            b = h[i];
+        }
+    }
+    c = a - b;
+    cout<<c;
+    return 0;
+}`,
+            },
+            Coconutgodz: {
+                trip: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, ans = 0;
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        ans += i;
+    }
+
+    vector<int> a(n);
+    for (int j = 0; j < n; j++) {
+        cin >> a[j];
+    }
+
+    int ans1 = accumulate(a.begin(), a.end(), 0);
+
+    if (ans < ans1) {
+        cout << "YES" << endl;
+    } else if (ans > ans1) {
+        cout << "NO" << endl;
+    } 
+
+    return 0;
+}`,
+            },
+            Zephyrthegoat: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,c,d;cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    for(int i=1;i<=n;i++){
+        c+=i;
+        d+=a[i-1];
+    }
+    if(c<d) cout<<"YES";
+    else if(c>d) cout<<"NO";
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    long long n;cin>>n;
+    long long height,height2;
+    long long h[n];
+    for(long long i=0;i<n;i++){
+        cin>>h[i];
+    }
+    for(long long i=1;i<n;i++){
+        if(h[i-1]>h[i]) height=h[i-1];
+        else if(h[i-1]<h[i]) height = h[i];
+        else if(h[i-1]==h[i]) height = h[i-1];
+    }
+    for(long long j=1;j<n;j++){
+        if (h[j]==height&&h[j-1]!=height) 
+            height2=h[j-1];
+        else if(h[j]!=height&& h[j-1]!=height) 
+            height2=max(h[j-1],h[j]);
+    }
+    cout<<height-height2;
+    return 0;
+}`,
+            },
+            pcmsp5a03: {
+                trip: `#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int a, b, c; cin >> a;
+    for (int j = 1; j < (a + 1); j += 1)
+    {
+        b += j;
+    }
+    for (int i = 0; i < a; i += 1)
+    {
+        cin >> a;
+        c += a;
+    }
+    if (c >= b)
+    {
+        cout << "YES";
+    }
+    else
+    {
+        cout << "NO";
+    }
+}`,
+            },
+            S2B_007: {
+                trip: `#include <iostream>
+using namespace std;
+
+int main()
+{
+	int n; cin >> n;
+	int sum = n;
+	for (int i = n-1; i > 0; i--) {
+	    sum = sum + i;
+}
+    int a; cin >> a;
+    int b; b = sizeof(a);
+    int plus = 0;
+    for (int j = 0; j < b; j++) {
+        int a[j];
+        plus = plus + a[j];
+}
+    if (sum > plus) {
+        cout << "NO";
+}
+    else {
+        cout << "YES";
+    }
+	return 0;
+}`,
+                buildings: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n, i; cin >> n; i = 0; int a[i];
+    for (int i = 0; i < n; i++) {
+    cin >> a[i];
+}
+    return 0;
+}`,
+            },
+            Unkonw_01: {
+                trip: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;  // 读取城市数量n
+
+    // 计算小G的好感度总和：1+2+...+n
+    long long g_sum = (long long)n * (n + 1) / 2;  // 用long long避免溢出（n≤1000时实际不会，但养成习惯）
+    long long cat_sum = 0;  // 小猫的好感度总和
+
+    // 读取n个a[i]并累加
+    for (int i = 0; i < n; i++) {
+        int a;
+        cin >> a;
+        cat_sum += a;
+    }
+
+    // 判断并输出结果
+    if (cat_sum >= g_sum) {
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl;
+    }
+
+    return 0;
+}`,
+                buildings: `#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n, h, tallest = INT_MIN, secondtall = INT_MIN;
+    cin >> n;
+    
+    for(int i = 0; i < n; i++){
+        cin >> h;
+        
+        if(h > tallest){ 
+            secondtall = tallest;
+            tallest = h;
+        }
+        
+        else if(h > secondtall){ 
+            secondtall = h;
+        }
+    }
+    
+    cout << tallest - secondtall << endl;
+    return 0;
+}`,
+            },
+        };
+
+        // 彈出視窗功能
+        const modal = document.getElementById('codeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const codeContent = document.getElementById('codeContent');
+        const closeModal = document.getElementById('closeModal');
+        
+        // 修改後的得分顯示元素
+        const modalProblemName = document.getElementById('modalProblemName');
+        const modalScore = document.getElementById('modalScore');
+        
+        // 為所有分數連結添加點擊事件
+        document.querySelectorAll('.score-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const student = this.getAttribute('data-student');
+                const problem = this.getAttribute('data-problem');
+                const score = this.textContent;
+                
+                // 設置彈出視窗標題
+                modalTitle.textContent = `${student} - ${problem} 代碼`;
+                
+                // 設置得分顯示區域
+                modalProblemName.textContent = problem;
+                modalScore.textContent = `${score} 分`;
+                
+                // 設置代碼內容
+                if(studentCodeDatabase[student] && studentCodeDatabase[student][problem]) {
+                    codeContent.textContent = studentCodeDatabase[student][problem];
+                } else {
+                    codeContent.textContent = `// 找不到 ${student} 的 ${problem} 代碼\n// 此處應顯示學生的解題代碼`;
+                }
+                
+                // 顯示彈出視窗
+                modal.style.display = 'flex';
+            });
+        });
+        
+        // 關閉彈出視窗
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // 點擊彈出視窗外部關閉
+        modal.addEventListener('click', function(e) {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // ESC鍵關閉彈出視窗
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
