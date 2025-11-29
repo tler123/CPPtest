@@ -402,6 +402,10 @@
             <h3>備註</h3>
             <p>萬嘉陽同學因被發現使用生成式 AI 作答，被判 0 分。</p>
         </div>
+        <div class="note-section">
+            <h3>題解</h3>
+            <p><a href="https://encouraging-innocent-35c.notion.site/C-2a992f9793dd804aa3d9db67e864777d?source=copy_link">點擊此連結可查看題解</a></p>
+        </div>
     </div>
     
     <!-- 代碼彈出視窗 -->
@@ -595,7 +599,7 @@ int main()
                 }
             }
         }
-        cout << total << '\n';
+        cout << total << '\\n';
     }
     return 0;
 }`,
@@ -629,7 +633,7 @@ int main()
                 p[i] = p[i + jump];
             }
         }
-        cout << "\n";
+        cout << "\\n";
         jump *= 2;
     }
     return 0;
@@ -817,7 +821,7 @@ int main(){
 			}
 		}
 		
-		printf("%lld\n", tot % p);
+		printf("%lld\\n", tot % p);
 	}
 	
 	return 0;
@@ -857,7 +861,7 @@ int main(){
 				}
 			}
 		}
-		printf("\n");
+		printf("\\n");
 	}
 	
 	return 0;
@@ -1035,7 +1039,7 @@ int main()
             }
             ans%=p;
 		}
-		cout<<ans<<'\n';
+		cout<<ans<<'\\n';
 	}
 	return 0;
 }`,
@@ -1141,13 +1145,13 @@ int main() {
                 if (i != k + k % 2) ans = (((ans * 26) % MOD) * 26) % MOD;
                 else ans = ((ans * 26) % MOD);
             } else if ((s[i-1] >= 'a' && s[i-1] <= 'z') && (s[k - i] >= 'a' && s[k - i] <= 'z') && s[i-1] != s[k-i]) {
-                cout<<0<<"\n"; 
+                cout<<0<<"\\n"; 
                 wer = 1;
                 break;
             }
         }
         if (wer == 1) continue;
-        cout<<ans % MOD<<"\n";
+        cout<<ans % MOD<<"\\n";
     }
     return 0;
 }`,
@@ -1259,7 +1263,7 @@ int main(){
 			if(s[i]>='A'&&s[i]<='Z'&&ss[i]>='A'&&ss[i]<='Z')ans*=26;
 			if(not(s[i]==ss[i]||(s[i]>='A'&&s[i]<='Z')||(ss[i]>='A'&&ss[i]<='Z')))ans=0;
 		}
-		cout<<ans%n<<'\n';
+		cout<<ans%n<<'\\n';
 	}
 }`,
             },
@@ -1832,7 +1836,7 @@ int main(){
                 if(studentCodeDatabase[student] && studentCodeDatabase[student][problem]) {
                     codeContent.textContent = studentCodeDatabase[student][problem];
                 } else {
-                    codeContent.textContent = `// 找不到 ${student} 的 ${problem} 代碼\n// 此處應顯示學生的解題代碼`;
+                    codeContent.textContent = `// 找不到 ${student} 的 ${problem} 代碼\\n// 此處應顯示學生的解題代碼`;
                 }
                 
                 // 顯示彈出視窗
@@ -1861,4 +1865,3 @@ int main(){
     </script>
 </body>
 </html>
-
