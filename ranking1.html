@@ -429,30 +429,30 @@
     </div>
     
     <script>
-        // Excel数据转换为JavaScript对象
+        // Excel数据转换为JavaScript对象（更新版）
         const studentsData = [
             { rank: 1, name: "林暐然", username: "MarquisMIT", trip: 100, buildings: 100, string: 100, knockout: 100, total: 400, note: "無", penalty: 0, finalScore: 400 },
-            { rank: 2, name: "余汶憲", username: "Wisley_PCMS", trip: 100, buildings: 70, string: 100, knockout: 100, total: 370, note: "喧嘩", penalty: 50, finalScore: 320 },
-            { rank: 3, name: "謝焯軒", username: "AdrianChe", trip: 100, buildings: 70, string: 100, knockout: 0, total: 270, note: "無", penalty: 0, finalScore: 270 },
-            { rank: 3, name: "施宇森", username: "TAN0302", trip: 100, buildings: 70, string: 100, knockout: "-", total: 270, note: "無", penalty: 0, finalScore: 270 },
+            { rank: 2, name: "余汶憲", username: "Wisley_PCMS", trip: 100, buildings: 100, string: 100, knockout: 100, total: 400, note: "喧嘩", penalty: 50, finalScore: 350 },
+            { rank: 3, name: "謝焯軒", username: "AdrianChe", trip: 100, buildings: 100, string: 100, knockout: 0, total: 300, note: "無", penalty: 0, finalScore: 300 },
+            { rank: 3, name: "施宇森", username: "TAN0302", trip: 100, buildings: 100, string: 100, knockout: "-", total: 300, note: "無", penalty: 0, finalScore: 300 },
             { rank: 5, name: "謝皓匡", username: "JamesChe55", trip: 100, buildings: 100, string: 70, knockout: "-", total: 270, note: "交談", penalty: 30, finalScore: 240 },
             { rank: 6, name: "許惠喬", username: "pcmsP6A24", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "無", penalty: 0, finalScore: 200 },
-            { rank: 6, name: "蔡昊江", username: "tsaihaojiang", trip: 100, buildings: 100, string: 0, knockout: 0, total: 200, note: "無", penalty: 0, finalScore: 200 },
             { rank: 6, name: "馮子丞", username: "jaysonfroooong", trip: 100, buildings: 100, string: 0, knockout: "-", total: 200, note: "無", penalty: 0, finalScore: 200 },
+            { rank: 6, name: "黃宇廷", username: "Kiteteth0323", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "無", penalty: 0, finalScore: 200 },
+            { rank: 9, name: "蔡昊江", username: "tsaihaojiang", trip: 100, buildings: 80, string: 0, knockout: 0, total: 180, note: "無", penalty: 0, finalScore: 180 },
             { rank: 9, name: "沈以恆", username: "Sam_I_Hang", trip: 100, buildings: 100, string: 10, knockout: "-", total: 210, note: "交談", penalty: 30, finalScore: 180 },
             { rank: 9, name: "蔣梓銘", username: "Leojiangchimeng", trip: 100, buildings: 80, string: "-", knockout: "-", total: 180, note: "無", penalty: 0, finalScore: 180 },
-            { rank: 11, name: "黃宇廷", username: "Kiteteth0323", trip: 100, buildings: 70, string: "-", knockout: "-", total: 170, note: "無", penalty: 0, finalScore: 170 },
-            { rank: 12, name: "李峻皓", username: "pcmsp5a12", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "喧嘩", penalty: 50, finalScore: 150 },
-            { rank: 13, name: "李沛穎", username: "PCMSP5A10", trip: 100, buildings: 70, string: 10, knockout: "-", total: 180, note: "喧嘩", penalty: 50, finalScore: 130 },
+            { rank: 12, name: "李沛穎", username: "PCMSP5A10", trip: 100, buildings: 100, string: 10, knockout: "-", total: 210, note: "喧嘩", penalty: 50, finalScore: 160 },
+            { rank: 13, name: "李峻皓", username: "pcmsp5a12", trip: 100, buildings: 100, string: "-", knockout: "-", total: 200, note: "喧嘩", penalty: 50, finalScore: 150 },
             { rank: 14, name: "陳浩軒", username: "s16505913", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "無", penalty: 0, finalScore: 100 },
             { rank: 14, name: "姚怡辰", username: "smgfxyjq_shiming", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "無", penalty: 0, finalScore: 100 },
             { rank: 16, name: "呂政恆", username: "KaydenLoi", trip: 0, buildings: 100, string: "-", knockout: "-", total: 100, note: "交談", penalty: 30, finalScore: 70 },
             { rank: 16, name: "陳思瀚", username: "Rafael23KGYM", trip: 0, buildings: 100, string: "-", knockout: "-", total: 100, note: "交談", penalty: 30, finalScore: 70 },
             { rank: 18, name: "韓鎛懋", username: "Coconutgodz", trip: 100, buildings: "-", string: "-", knockout: "-", total: 100, note: "喧嘩", penalty: 50, finalScore: 50 },
-            { rank: 19, name: "李君堯", username: "Zephyrthegoat", trip: 0, buildings: 15, string: "-", knockout: "-", total: 15, note: "無", penalty: 0, finalScore: 15 },
-            { rank: 20, name: "江子朗", username: "pcmsp5a03", trip: 0, buildings: "-", string: "-", knockout: "-", total: 0, note: "交談", penalty: 30, finalScore: 0 },
-            { rank: 20, name: "周樂天", username: "S2B_007", trip: 0, buildings: 0, string: "-", knockout: "-", total: 0, note: "無", penalty: 0, finalScore: 0 },
-            { rank: 20, name: "萬嘉陽", username: "Unkonw_01", trip: 100, buildings: 55, string: "-", knockout: "-", total: 155, note: "作弊", penalty: 155, finalScore: 0 }
+            { rank: 20, name: "李君堯", username: "Zephyrthegoat", trip: 0, buildings: 15, string: "-", knockout: "-", total: 15, note: "無", penalty: 0, finalScore: 15 },
+            { rank: 21, name: "江子朗", username: "pcmsp5a03", trip: 0, buildings: "-", string: "-", knockout: "-", total: 0, note: "交談", penalty: 30, finalScore: 0 },
+            { rank: 21, name: "周樂天", username: "S2B_007", trip: 0, buildings: 0, string: "-", knockout: "-", total: 0, note: "無", penalty: 0, finalScore: 0 },
+            { rank: 21, name: "萬嘉陽", username: "Unkonw_01", trip: 100, buildings: 80, string: "-", knockout: "-", total: 180, note: "作弊", penalty: 400, finalScore: 0 }
         ];
 
         // 生成表格行
